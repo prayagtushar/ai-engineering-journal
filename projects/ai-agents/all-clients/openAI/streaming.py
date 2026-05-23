@@ -33,22 +33,24 @@ from openai import AsyncOpenAI
 
 async_client = AsyncOpenAI()
 
+
 # Pattern 1 - Old and Manual method
 async def stream_manual(prompt: str):
     stream = await async_client.chat.completions.create(
         model="gpt-4o",
         messages=[{"role": "user", "content": prompt}],
-        stream=True, # Highlight
+        stream=True,  # Highlight
     )
 
     async for chunks in stream:
         delta = chunks.choices[0].delta
-        if delta.content: # delta.content is None on the last chunk
+        if delta.content:  # delta.content is None on the last chunk
             print(delta.content, end="", flush=True)
-    print() # newline after stream ends
+    print()  # newline after stream ends
+
 
 # Pattern 2 - Preferred and Latest method
-async def streaming_response(prompt : str) -> str:
+async def streaming_response(prompt: str) -> str:
     texts = ""
     async with async_client.chat.completion.stream(
         model="gpt-4o",
@@ -56,12 +58,11 @@ async def streaming_response(prompt : str) -> str:
         max_tokens=500,
     ) as stream:
         async for event in stream:
-# event types can be 'content.delta','content.done', 'chunk', 'message', refusal.delta' 
+            # event types can be 'content.delta','content.done', 'chunk', 'message', refusal.delta'
             if event.type == "content.delta":
-                texts += event.delta # So each stream text will get added to the texts
+                texts += event.delta  # So each stream text will get added to the texts
 
-# After stream exhausted, get the full accumulated completion:
-        final= await stream.get_final_completion()
+        # After stream exhausted, get the full accumulated completion:
+        final = await stream.get_final_completion()
         print("\n--- finish_reason:", final.choices[0].finish_reason)
     return texts
-
