@@ -1,7 +1,7 @@
 import json
 from openai import OpenAI
 
-# Use Pydantic for Schematic Respone
+# Use Pydantic for Schematic Response
 from pydantic import BaseModel
 
 
@@ -27,7 +27,7 @@ class Fruits(BaseModel):
 class FruitsList(BaseModel):
     fruits: list[Fruits]
 
-response = client.beta.chat.completions.parse(
+response = client.chat.completions.parse(
     model="gpt-4o",
     messages=[{"role": "user", "content": "List 3 fruits."}],
     response_format=FruitsList,

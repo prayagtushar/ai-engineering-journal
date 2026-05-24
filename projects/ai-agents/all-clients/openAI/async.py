@@ -22,11 +22,11 @@ async def batch_completion(prompts: list[str]) -> list:
 
 
 if __name__ == "__main__":
-    prompts = ["Tell me a joke", "What is Python?", "What is Ayncio?"]
+    prompts = ["Tell me a joke", "What is Python?", "What is Asyncio?"]
 
     # asyncio.run() is the entry point for any async program
     results = asyncio.run(batch_completion(prompts))
 
     print("\n--- Final results ---")
     for i, r in enumerate(results):
-        print(f"  Result {i + 1}: {r.choices[0].message.content[:80]}")
+        print(f"  Result {i + 1}: {r[:80]}")

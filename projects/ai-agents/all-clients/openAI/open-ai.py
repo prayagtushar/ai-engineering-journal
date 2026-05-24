@@ -1,11 +1,7 @@
 from openai import OpenAI
 
-# Creates a client that reads OPENAI_API_KEY from your .env file automatically
 agent = OpenAI()
 
-print("Calling OpenAI API...")
-
-# The script pauses here until the response comes back (sync = blocking)
 response = agent.chat.completions.create(
     model="gpt-4o",
     messages=[
@@ -35,7 +31,10 @@ print(f"Request ID:    {response.id}")  # useful for debugging in OpenAI dashboa
 # ┌──────────────┬─────────┬──────────────────────────┬───────────────┐
 # │ Model        │ Context │ Best for                 │ Cost (approx) │
 # ├──────────────┼─────────┼──────────────────────────┼───────────────┤
-# │ gpt-4o       │ 128k    │ General best quality     │ $$$           │
+# │ gpt-5.4      │ 128k    │ Latest frontier model    │ $$$$          │
+# │ gpt-5.2      │ 128k    │ General best quality     │ $$$           │
+# │ gpt-4.1      │ 1M      │ Long context, reliable   │ $$$           │
+# │ gpt-4o       │ 128k    │ Legacy best quality      │ $$$           │
 # │ gpt-4o-mini  │ 128k    │ High-volume, cost-sens.  │ $             │
 # │ o3           │ 200k    │ Complex reasoning        │ $$$           │
 # │ o4-mini      │ 200k    │ Reasoning, cheaper       │ $$            │

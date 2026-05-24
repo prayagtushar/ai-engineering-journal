@@ -52,7 +52,7 @@ async def stream_manual(prompt: str):
 # Pattern 2 - Preferred and Latest method
 async def streaming_response(prompt: str) -> str:
     texts = ""
-    async with async_client.chat.completion.stream(
+    async with async_client.chat.completions.stream(
         model="gpt-4o",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=500,
