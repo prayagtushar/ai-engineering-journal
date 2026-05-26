@@ -17,14 +17,14 @@ dependencies = [
 ]
 
 [project.scripts]
-llm = "llm_client.cli:cli"   # makes `llm ask "..."` work after install
+llm = "llm_client.cli:cli" 
 
 [tool.uv]
 dev-dependencies = [
     "pytest>=8.0",
     "pytest-asyncio>=0.24",
     "pytest-mock>=3.0",
-    "httpx>=0.27.0",      # needed by FastAPI TestClient
+    "httpx>=0.27.0",
     "mypy>=1.10",
     "ruff>=0.6.0",
 ]
