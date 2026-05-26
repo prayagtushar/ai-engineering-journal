@@ -1,1 +1,1 @@
-# learning-python-for-ai
+# documenting everything i learn 
