@@ -25,6 +25,16 @@ print(
 print(
     f"Stop reason:   {response.stop_reason}"
 )  # 'end_turn' | 'max_tokens' | 'stop_sequence' | 'tool_use'
+
+# Stop Reasons
+# ┌───────────────┬────────────────────────────────────────────────────────┐
+# │ Reason        │ Meaning                                                │
+# ├───────────────┼────────────────────────────────────────────────────────┤
+# │ end_turn      │ Model naturally finished the turn                      │
+# │ max_tokens    │ Hit max_tokens limit — response truncated               │
+# │ stop_sequence │ A custom stop sequence was encountered                 │
+# │ tool_use      │ Model wants to call a tool/function                    │
+# └───────────────┴────────────────────────────────────────────────────────┘
 print(f"Input tokens:  {response.usage.input_tokens}")  # tokens you sent
 print(f"Output tokens: {response.usage.output_tokens}")  # tokens the model generated
 print(f"Model used:    {response.model}")  # actual model (may differ from requested)

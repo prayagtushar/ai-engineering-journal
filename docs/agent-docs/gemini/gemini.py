@@ -22,6 +22,17 @@ print(f"Content:       {response.text}")  # the actual reply text
 print(
     f"Finish reason: {response.candidates[0].finish_reason}"
 )  # 'STOP' | 'MAX_TOKENS' | 'SAFETY' | 'RECITATION' | 'OTHER'
+
+# Finish Reasons
+# ┌───────────────┬────────────────────────────────────────────────────────┐
+# │ Reason        │ Meaning                                                │
+# ├───────────────┼────────────────────────────────────────────────────────┤
+# │ STOP          │ Model naturally finished generating the response       │
+# │ MAX_TOKENS    │ Hit the token limit — response truncated               │
+# │ SAFETY        │ Response blocked by safety filters                     │
+# │ RECITATION    │ Model regurgitated training data                       │
+# │ OTHER         │ Other unspecified reason                               │
+# └───────────────┴────────────────────────────────────────────────────────┘
 print(
     f"Prompt tokens:      {response.usage_metadata.prompt_token_count}"
 )  # tokens you sent

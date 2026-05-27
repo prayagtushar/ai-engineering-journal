@@ -39,3 +39,14 @@ print(f"Request ID:    {response.id}")  # useful for debugging in OpenAI dashboa
 # │ o3           │ 200k    │ Complex reasoning        │ $$$           │
 # │ o4-mini      │ 200k    │ Reasoning, cheaper       │ $$            │
 # └──────────────┴─────────┴──────────────────────────┴───────────────┘
+
+
+# Finish Reasons
+# ┌─────────────────┬──────────────────────────────────────────────────────┐
+# │ Reason          │ Meaning                                              │
+# ├─────────────────┼──────────────────────────────────────────────────────┤
+# │ stop            │ Model naturally stopped (found a stopping sequence)  │
+# │ length          │ Hit max_tokens limit — response truncated            │
+# │ tool_calls      │ Model wants to call a tool/function                  │
+# │ content_filter  │ Response flagged by content moderation filter        │
+# └─────────────────┴──────────────────────────────────────────────────────┘

@@ -28,6 +28,16 @@ print(f"Content:       {response.choices[0].message.content}")  # the actual rep
 print(
     f"Finish reason: {response.choices[0].finish_reason}"
 )  # 'stop' | 'length' | 'tool_calls' | 'content_filter'
+
+# Finish Reasons
+# ┌─────────────────┬──────────────────────────────────────────────────────┐
+# │ Reason          │ Meaning                                              │
+# ├─────────────────┼──────────────────────────────────────────────────────┤
+# │ stop            │ Model naturally stopped (found a stopping sequence)  │
+# │ length          │ Hit max_tokens limit — response truncated            │
+# │ tool_calls      │ Model wants to call a tool/function                  │
+# │ content_filter  │ Response flagged by content moderation filter        │
+# └─────────────────┴──────────────────────────────────────────────────────┘
 print(f"Prompt tokens: {response.usage.prompt_tokens}")  # tokens you sent
 print(
     f"Completion tokens: {response.usage.completion_tokens}"
