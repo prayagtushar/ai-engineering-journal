@@ -3,6 +3,24 @@ from playwright.async_api import async_playwright
 import json
 
 
+USEFUL_FIELDS = [
+    "name",
+    "slug",
+    "one_liner",
+    "long_description",
+    "batch",
+    "website",
+    "tags",
+    "status",
+]
+
+
+def extract_companies(raw):
+    hits = raw.get("results", [{}])[0].get("hits", [])
+    extracted = [{k: hit[k] for k in USEFUL_FIELDS if k in hit} for hit in hits]
+    return [c for c in extracted if c.get("name")]
+
+
 async def intercept_yc():
     captured = []
 
@@ -10,22 +28,20 @@ async def intercept_yc():
         browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
 
-        # Register a listener BEFORE navigating
-        # It fires for every network response the page receives
         async def handle_response(response):
             url = response.url
-            # Filter for responses that look like data APIs
-            if "algolia" in url or "/api/" in url or "companies" in url:
+            if "algolia.net" in url and "/queries" in url:
                 try:
                     data = await response.json()
                     captured.append({"url": url, "data": data})
-                    print(f"Captured: {url}")
                 except Exception:
-                    pass  # not JSON, skip it
+                    pass
 
         page.on("response", handle_response)
 
-        await page.goto("https://www.ycombinator.com/companies")
+        url = "https://www.ycombinator.com/companies"
+
+        await page.goto(url)
         await page.wait_for_load_state("networkidle")
 
         await browser.close()
@@ -35,9 +51,14 @@ async def intercept_yc():
 
 results = asyncio.run(intercept_yc())
 
-if results:
-    print(f"\nCaptured {len(results)} API responses")
-    # Print the first one pretty
-    print(json.dumps(results[0]["data"], indent=2)[:3000])
+companies = []
+for r in results:
+    companies.extend(extract_companies(r["data"]))
+
+if companies:
+    print(f"Captured {len(companies)} companies")
+    with open("captured_apis.json", "w", encoding="utf-8") as f:
+        json.dump(companies, f, indent=2)
+    print("Saved to captured_apis.json")
 else:
     print("No API responses captured")
